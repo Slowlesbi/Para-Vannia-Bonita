@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Para Vannia 💙</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #4facfe, #00c6ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    transition: background 2s ease;
+    overflow: hidden;
+}
+
+.contenedor {
+    background: white;
+    width: 460px;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    text-align: center;
+    transition: opacity 1s ease;
+}
+
+h2, h3, h4 {
+    margin: 10px 0;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 28px;
+    margin: 12px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s ease;
+    font-family: 'Playfair Display', serif;
+}
+
+.si {
+    background: #0d3b66;
+    color: white;
+}
+
+.no {
+    background: #1d3557;
+    color: white;
+    position: relative;
+}
+
+.brillo-final {
+    animation: brillar 2s infinite alternate ease-in-out;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+@keyframes brillar {
+    from { box-shadow: 0 0 15px rgba(13,59,102,0.4); }
+    to { box-shadow: 0 0 35px rgba(13,59,102,0.9); }
+}
+
+.final-screen {
+    position: fixed;
+    inset: 0;
+    background: #0b1c2d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 50px;
+    opacity: 0;
+    letter-spacing: 2px;
+    animation: aparecerFinal 3s ease forwards;
+}
+
+@keyframes aparecerFinal {
+    to {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor" id="contenedor">
+    <h3>Para: vannia bonita 💙</h3>
+    <h4>De: tu odiosa y linda exx</h4>
+    <hr>
+
+    <div id="pregunta1">
+        <h2>¿Sabías que me gustas?</h2>
+        <button class="si" id="btnSi" onclick="respuestaPrimera(true)">Sí</button>
+        <button class="no" id="btnNo">No</button>
+    </div>
+
+    <div id="contenido"></div>
+</div>
+
+<script>
+let contenido = document.getElementById("contenido");
+let contenedor = document.getElementById("contenedor");
+let btnSi = document.getElementById("btnSi");
+let btnNo = document.getElementById("btnNo");
+
+let escala = 1;
+let vecesQueSeMovio = 0;
+
+/* Botón SI se agranda solo por 4 segundos */
+let crecer = setInterval(() => {
+    escala += 0.04;
+    btnSi.style.transform = `scale(${escala})`;
+}, 300);
+
+setTimeout(() => {
+    clearInterval(crecer);
+}, 4000);
+
+/* Botón NO se mueve 5 veces antes de dejarse presionar */
+btnNo.addEventListener("click", function(e) {
+
+    if (vecesQueSeMovio < 5) {
+        e.preventDefault();
+
+        let x = Math.random() * 180 - 90;
+        let y = Math.random() * 120 - 60;
+
+        btnNo.style.transform = `translate(${x}px, ${y}px)`;
+
+        vecesQueSeMovio++;
+    } else {
+        respuestaPrimera(false);
+    }
+
+});
+
+/* Respuesta primera pregunta */
+function respuestaPrimera(respuesta) {
+
+    clearInterval(crecer);
+
+    document.getElementById("pregunta1").style.display = "none";
+
+    if (respuesta) {
+        contenido.innerHTML = `
+            <p style="font-size:18px;">
+            te amo muchiiiisimo, bonita exxx, kissesss 💋💋💋
+            </p>
+        `;
+    } else {
+        contenido.innerHTML = `
+            <p style="font-size:18px;">
+            Me gustas como no tienes idea, bonita, te mando muuuchos besitos 💙💋
+            </p>
+        `;
+    }
+
+    setTimeout(() => {
+        mostrarSegunda();
+    }, 5000);
+}
+
+/* Segunda pregunta */
+function mostrarSegunda() {
+    contenido.innerHTML = `
+        <h2>¿Puedo decirte una última cosa?</h2>
+        <button class="si" onclick="mostrarFinal(true)">Sí</button>
+        <button class="no" onclick="mostrarFinal(false)">No</button>
+    `;
+}
+
+/* Mensaje largo */
+function mostrarFinal(respuesta) {
+    if (respuesta) {
+        contenido.innerHTML = `
+            <div class="brillo-final">
+                <p style="line-height:1.8;">
+                Hola bonita, puede que digas ¿qué es estó? y pues es una cosita que quise hacer solo para decirte que te amo, 
+                sé que no puedo decirtelo por obvias razones pero lo hago. Te amo como no tienes idea y siempre tendrás un lugar en mi corazón, 
+                prontamente en mi piel ;) , eres y serás el amor de mi vida. mi niña hermosa, en nuestra relación hubieron altos y bajos pero a pesar de todo 
+                valoro cada momento que pasamos juntas, te amo demasiado y discúlpame por ser una tonta pero soy una tonta enamorada de ti tanto que me 
+                pondría de rodillas si me lo pidieras, un beso bonita, charito 💘
+                </p>
+            </div>
+        `;
+
+        setTimeout(() => {
+            mostrarPantallaFinal();
+        }, 60000);
+
+    } else {
+        contenido.innerHTML = `
+            <p>Está bien bonita… igual te mando un beso 💋</p>
+        `;
+    }
+}
+
+/* Pantalla final */
+function mostrarPantallaFinal() {
+    contenedor.style.opacity = "0";
+
+    setTimeout(() => {
+        contenedor.style.display = "none";
+        document.body.style.background = "#0b1c2d";
+
+        let final = document.createElement("div");
+        final.classList.add("final-screen");
+        final.innerHTML = "Te amo infinito + 1 💙";
+        document.body.appendChild(final);
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
